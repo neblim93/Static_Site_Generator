@@ -1,7 +1,7 @@
 import os
 import shutil
 
-from generate_page import generate_page
+from generate_page import generate_pages_recursive
 
 
 def static_to_public():
@@ -29,7 +29,7 @@ def static_copy_recursion(source_path, destination_path):
 
 def main():
     static_to_public()
-    generate_page("content/index.md", "template.html", "public/index.html")
+    generate_pages_recursive("content", "template.html", "public")
 
 
 main()
