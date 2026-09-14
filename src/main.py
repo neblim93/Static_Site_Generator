@@ -1,16 +1,17 @@
 import os
 import shutil
+import sys
 
 from generate_page import generate_pages_recursive
 
 
 def static_to_public():
-    if os.path.exists("public"):
-        shutil.rmtree("public")
+    if os.path.exists("docs"):
+        shutil.rmtree("docs")
 
-    os.mkdir("public")
+    os.mkdir("docs")
 
-    static_copy_recursion("static", "public")
+    static_copy_recursion("static", "docs")
 
 def static_copy_recursion(source_path, destination_path):
     directory_names = os.listdir(source_path)
@@ -26,10 +27,13 @@ def static_copy_recursion(source_path, destination_path):
             static_copy_recursion(directory_path, destination_directory_path)
 
 
-
 def main():
+    if len(sys.argv) >= 1:
+        basepath = sys.argv[1]
+    else:
+        basepath = "/"
     static_to_public()
-    generate_pages_recursive("content", "template.html", "public")
+    generate_pages_recursive("content", "template.html", "docs", basepath)
 
 
 main()
